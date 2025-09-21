@@ -6,8 +6,6 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": true,
-      "installOhMyZsh": true,
       "upgradePackages": true
     },
     "ghcr.io/devcontainers/features/python:1": {
@@ -20,11 +18,6 @@
     }
   },
   
-  "mounts": [
-    "source=${localWorkspaceFolderBasename}-venv,target=${containerWorkspaceFolder}/.venv,type=volume",
-    "source=${localWorkspaceFolderBasename}-bashhistory,target=/commandhistory,type=volume"
-  ],
-  
   "onCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install --upgrade pip && [ -f requirements.txt ] && pip install -r requirements.txt || [ -f pyproject.toml ] && pip install -e . || true",
   "postAttachCommand": ". .venv/bin/activate && [ -f manage.py ] && python manage.py runserver 0.0.0.0:8000 || [ -f app.py ] && python app.py || true",
@@ -33,16 +26,13 @@
     "vscode": {
       "extensions": [
         "anthropic.claude-code",
-        "github.copilot",
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "ms-python.black-formatter",
         "ms-toolsai.jupyter"
       ],
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
         "python.defaultInterpreterPath": ".venv/bin/python",
-        "python.formatting.provider": "black",
+        "python.formatting.provider": "autopep8",
         "python.linting.enabled": true,
         "python.linting.pylintEnabled": true,
         "editor.formatOnSave": true,
